@@ -3,54 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Acessível Completo</title>
+  <title>Portal Acessível - Tecnologia e Inclusão</title>
+  
   <style>
-    /* --- VARIÁVEIS DE CORES (TEMAS) --- */
+    /* ===================================================
+       1. VARIÁVEIS E TEMAS (PADRÃO, ESCURO E DALTONISMO)
+       =================================================== */
     :root {
-      --bg-color: #ffffff;
-      --text-color: #121212;
-      --card-bg: #f4f4f9;
-      --primary-color: #0056b3;
-      --border-color: #cccccc;
+      --bg-color: #f8f9fa;
+      --text-color: #212529;
+      --card-bg: #ffffff;
+      --primary-color: #0d6efd;
+      --primary-hover: #0b5ed7;
+      --border-color: #dee2e6;
+      --focus-outline: #ffcc00;
       --base-font-size: 16px;
     }
 
     /* Modo Escuro / Alto Contraste */
     body.theme-dark {
       --bg-color: #121212;
-      --text-color: #ffffff;
+      --text-color: #f8f9fa;
       --card-bg: #1e1e1e;
-      --primary-color: #8ab4f8;
-      --border-color: #444444;
+      --primary-color: #6ea8fe;
+      --primary-hover: #9ec5fe;
+      --border-color: #495057;
     }
 
-    /* Prot
+    /* Protanopia (Deficiência do Vermelho) */
     body.theme-protanopia {
-      --bg-color: #f7f7f7;
-      --text-color: #000000;
+      --bg-color: #f4f4f6;
+      --text-color: #111111;
       --card-bg: #e6f0ff;
       --primary-color: #0072b2;
+      --border-color: #b0bec5;
     }
 
-    /* Deuteranopia */
+    /* Deuteranopia (Deficiência do Verde) */
     body.theme-deuteranopia {
-      --bg-color: #fcfbfa;
+      --bg-color: #faf9f5;
       --text-color: #1a1a1a;
       --card-bg: #fff8e1;
       --primary-color: #d55e00;
+      --border-color: #ffe082;
     }
 
-    /* Tritanopia */
+    /* Tritanopia (Deficiência do Azul) */
     body.theme-tritanopia {
       --bg-color: #f5f5f5;
       --text-color: #111111;
       --card-bg: #ffebee;
       --primary-color: #cc79a7;
+      --border-color: #ef9a9a;
     }
 
-    /* --- ESTILOS GERAIS --- */
+    /* ===================================================
+       2. ESTILOS GERAIS E ESTRUTURA
+       =================================================== */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: var(--base-font-size);
       background-color: var(--bg-color);
       color: var(--text-color);
@@ -60,22 +75,44 @@
       transition: background-color 0.3s, color 0.3s;
     }
 
-    /* Foco visível para navegação por teclado */
+    /* Foco acessível via teclado */
     :focus {
-      outline: 4px solid #ffcc00 !important;
-      outline-offset: 2px;
+      outline: 4px solid var(--focus-outline) !important;
+      outline-offset: 3px;
     }
 
-    /* --- BARRA DE FERRAMENTAS DE ACESSIBILIDADE --- */
-    .accessibility-toolbar {
+    .skip-link {
+      position: absolute;
+      top: -50px;
+      left: 10px;
+      background: #000;
+      color: #fff;
+      padding: 10px 15px;
+      z-index: 10000;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .skip-link:focus {
+      top: 10px;
+    }
+
+    /* ===================================================
+       3. PAINEL E FERRAMENTAS DE ACESSIBILIDADE
+       =================================================== */
+    .accessibility-bar {
       background-color: var(--card-bg);
       border-bottom: 2px solid var(--border-color);
-      padding: 10px 20px;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .toolbar-group {
@@ -84,196 +121,109 @@
       gap: 8px;
     }
 
-    .toolbar-group button, .toolbar-group select {
+    .btn-acc {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      padding: 8px 14px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.1s, background-color 0.2s;
+    }
+
+    .btn-acc:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-acc:active {
+      transform: scale(0.96);
+    }
+
+    select.select-acc {
       padding: 8px 12px;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      border-radius: 6px;
       border: 1px solid var(--border-color);
-      border-radius: 4px;
       background-color: var(--bg-color);
       color: var(--text-color);
       cursor: pointer;
     }
 
-    /* --- LUPA E LEITOR DE TEXTO --- */
-    #magnifier-lens {
-      position: absolute;
-      border: 3px solid var(--primary-color);
-      border-radius: 50%;
-      cursor: none;
-      width: 150px;
-      height: 150px;
-      pointer-events: none;
-      display: none;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      background-repeat: no-repeat;
-      z-index: 1000;
+    /* ===================================================
+       4. MECÂNICA DA LUPA (ZOOM AO PASSAR O MOUSE)
+       =================================================== */
+    body.magnifier-active p,
+    body.magnifier-active h1,
+    body.magnifier-active h2,
+    body.magnifier-active h3,
+    body.magnifier-active li,
+    body.magnifier-active .card {
+      transition: transform 0.15s ease-in-out;
     }
 
-    /* --- LAYOUT DO SITE --- */
-    header, main, footer {
-      max-width: 1000px;
+    body.magnifier-active p:hover,
+    body.magnifier-active h1:hover,
+    body.magnifier-active h2:hover,
+    body.magnifier-active h3:hover,
+    body.magnifier-active li:hover,
+    body.magnifier-active .card:hover {
+      transform: scale(1.15);
+      transform-origin: left center;
+      background-color: rgba(255, 204, 0, 0.25) !important;
+      border-radius: 6px;
+    }
+
+    /* ===================================================
+       5. LAYOUT E CONTEÚDO DO SITE
+       =================================================== */
+    .container {
+      max-width: 1100px;
       margin: 0 auto;
       padding: 20px;
     }
 
-    .card-grid {
+    header.main-header {
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 20px;
+    }
+
+    .grid-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
-      margin-top: 20px;
+      margin: 30px 0;
     }
 
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
-      padding: 20px;
       border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
 
-    .skip-link {
-      position: absolute;
-      top: -40px;
-      left: 0;
-      background: #000;
-      color: #fff;
-      padding: 8px;
-      z-index: 100;
-    }
-    .skip-link:focus {
-      top: 0;
-    }
-  </style>
-</head>
-<body>
-
-  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo principal</a>
-
-  <aside class="accessibility-toolbar" aria-label="Painel de Acessibilidade">
-    <div class="toolbar-group">
-      <span><strong>Fonte:</strong></span>
-      <button onclick="changeFontSize(2)" aria-label="Aumentar tamanho do texto">A+</button>
-      <button onclick="changeFontSize(-2)" aria-label="Diminuir tamanho do texto">A-</button>
-      <button onclick="resetFontSize()" aria-label="Restaurar tamanho do texto">A</button>
-    </div>
-
-    <div class="toolbar-group">
-      <label for="theme-select"><strong>Modo de Cor:</strong></label>
-      <select id="theme-select" onchange="applyTheme(this.value)" aria-label="Selecione o modo de cor ou daltonismo">
-        <option value="default">Padrão (Claro)</option>
-        <option value="dark">Alto Contraste (Escuro)</option>
-        <option value="protanopia">Protanopia (Cegueira ao Vermelho)</option>
-        <option value="deuteranopia">Deuteranopia (Cegueira ao Verde)</option>
-        <option value="tritanopia">Tritanopia (Cegueira ao Azul)</option>
-      </select>
-    </div>
-
-    <div class="toolbar-group">
-      <button id="toggle-magnifier" onclick="toggleMagnifier()" aria-pressed="false">Activar Lupa</button>
-      <button onclick="readSelectedText()" aria-label="Lê em voz alta o texto selecionado">Ouvir Seleção 🔊</button>
-    </div>
-  </aside>
-
-  <div id="magnifier-lens"></div>
-
-  <header>
-    <h1>Portal Acessível Interativo</h1>
-    <p>Um exemplo de plataforma desenvolvida com foco total em inclusão visual e mecânicas personalizadas.</p>
-  </header>
-
-  <main id="conteudo-principal">
-    <section>
-      <h2>Recursos Disponíveis</h2>
-      <p>Utilize a barra no topo para ajustar a visualização de acordo com a sua necessidade. Você pode testar os filtros de cor, aumentar a fonte ou ativar a lupa virtual.</p>
-
-      <div class="card-grid">
-        <article class="card">
-          <h3>Filtros de Daltonismo</h3>
-          <p>O menu de temas altera as cores de fundo e contraste para facilitar a leitura para pessoas com protanopia, deuteranopia ou tritanopia.</p>
-        </article>
-
-        <article class="card">
-          <h3>Lupa Digital</h3>
-          <p>Ao ativar a lupa, você pode passar o cursor sobre qualquer área da tela para ampliar o conteúdo e visualizar os detalhes com facilidade.</p>
-        </article>
-
-        <article class="card">
-          <h3>Leitor por Voz</h3>
-          <p>Selecione qualquer texto desta página com o mouse ou teclado e clique no botão "Ouvir Seleção" para escutar a leitura em áudio.</p>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2026 Projeto Acessibilidade Web. Desenvolvido para todos.</p>
-  </footer>
-
-  <script>
-    // 1. Controle de Tamanho de Fonte
-    let currentFontSize = 16;
-    function changeFontSize(delta) {
-      currentFontSize = Math.min(Math.max(12, currentFontSize + delta), 28);
-      document.documentElement.style.setProperty('--base-font-size', currentFontSize + 'px');
-    }
-    function resetFontSize() {
-      currentFontSize = 16;
-      document.documentElement.style.setProperty('--base-font-size', '16px');
+    /* ===================================================
+       6. RODAPÉ E LICENÇA
+       =================================================== */
+    footer {
+      background-color: var(--card-bg);
+      border-top: 2px solid var(--border-color);
+      margin-top: 50px;
+      padding: 30px 20px;
     }
 
-    // 2. Modos de Cores / Daltonismo
-    function applyTheme(theme) {
-      document.body.className = ''; // Limpa temas anteriores
-      if (theme !== 'default') {
-        document.body.classList.add('theme-' + theme);
-      }
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
     }
 
-    // 3. Leitor de Texto em Voz Alta
-    function readSelectedText() {
-      const selectedText = window.getSelection().toString();
-      if (selectedText.trim() !== "") {
-        const utterance = new SpeechSynthesisUtterance(selectedText);
-        utterance.lang = 'pt-BR';
-        window.speechSynthesis.speak(utterance);
-      } else {
-        alert("Por favor, selecione algum texto com o mouse ou teclado primeiro.");
-      }
-    }
-
-    // 4. Mecânica da Lupa
-    let magnifierActive = false;
-    const lens = document.getElementById("magnifier-lens");
-
-    function toggleMagnifier() {
-      magnifierActive = !magnifierActive;
-      const btn = document.getElementById("toggle-magnifier");
-      
-      if (magnifierActive) {
-        btn.setAttribute("aria-pressed", "true");
-        btn.innerText = "Desativar Lupa";
-        document.addEventListener("mousemove", moveLens);
-      } else {
-        btn.setAttribute("aria-pressed", "false");
-        btn.innerText = "Ativar Lupa";
-        lens.style.display = "none";
-        document.removeEventListener("mousemove", moveLens);
-      }
-    }
-
-    function moveLens(e) {
-      if (!magnifierActive) return;
-      lens.style.display = "block";
-
-      const x = e.pageX;
-      const y = e.pageY;
-
-      lens.style.left = (x - 75) + "px";
-      lens.style.top = (y - 75) + "px";
-
-      // Efeito de zoom simulado
-      lens.style.backgroundColor = getComputedStyle(document.body).backgroundColor;
-      lens.style.boxShadow = "0 0 15px rgba(0,0,0,0.3)";
-    }
-  </script>
-</body>
-</html>
+    .footer-bottom {
+      text-align: center;
+      margin-top: 30px;
+      padding-top:

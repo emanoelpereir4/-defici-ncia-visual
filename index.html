@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Acessível - Tecnologia e Inclusão</title>
+  <title>Portal da Inclusão - Autonomia e Deficiência Visual</title>
   
   <style>
     /* ===================================================
@@ -20,7 +20,7 @@
       --base-font-size: 16px;
     }
 
-    /* Modo Escuro / Alto Contraste */
+    /* Alto Contraste / Modo Escuro */
     body.theme-dark {
       --bg-color: #121212;
       --text-color: #f8f9fa;
@@ -75,7 +75,7 @@
       transition: background-color 0.3s, color 0.3s;
     }
 
-    /* Foco acessível via teclado */
+    /* Destaque de foco para navegação por teclado (WCAG) */
     :focus {
       outline: 4px solid var(--focus-outline) !important;
       outline-offset: 3px;
@@ -98,7 +98,7 @@
     }
 
     /* ===================================================
-       3. PAINEL E FERRAMENTAS DE ACESSIBILIDADE
+       3. PAINEL DE ACESSIBILIDADE
        =================================================== */
     .accessibility-bar {
       background-color: var(--card-bg);
@@ -152,7 +152,7 @@
     }
 
     /* ===================================================
-       4. MECÂNICA DA LUPA (ZOOM AO PASSAR O MOUSE)
+       4. MECÂNICA DA LUPA (AMPLIAÇÃO POR HOVER)
        =================================================== */
     body.magnifier-active p,
     body.magnifier-active h1,
@@ -176,7 +176,7 @@
     }
 
     /* ===================================================
-       5. LAYOUT E CONTEÚDO DO SITE
+       5. LAYOUT DA PÁGINA
        =================================================== */
     .container {
       max-width: 1100px;
@@ -244,13 +244,13 @@
     
     <div class="toolbar-group">
       <span id="label-fonte"><strong>Fonte:</strong></span>
-      <button class="btn-acc" onclick="changeFontSize(2)" aria-labelledby="label-fonte" aria-label="Aumentar Fonte">A+</button>
-      <button class="btn-acc" onclick="changeFontSize(-2)" aria-labelledby="label-fonte" aria-label="Diminuir Fonte">A-</button>
-      <button class="btn-acc" onclick="resetFontSize()" aria-labelledby="label-fonte" aria-label="Restaurar Fonte">A</button>
+      <button class="btn-acc" onclick="changeFontSize(2)" aria-labelledby="label-fonte" aria-label="Aumentar Tamanho do Texto">A+</button>
+      <button class="btn-acc" onclick="changeFontSize(-2)" aria-labelledby="label-fonte" aria-label="Diminuir Tamanho do Texto">A-</button>
+      <button class="btn-acc" onclick="resetFontSize()" aria-labelledby="label-fonte" aria-label="Restaurar Tamanho Original">A</button>
     </div>
 
     <div class="toolbar-group">
-      <label for="theme-select"><strong>Modo de Visualização:</strong></label>
+      <label for="theme-select"><strong>Modo de Cor:</strong></label>
       <select id="theme-select" class="select-acc" onchange="applyTheme(this.value)">
         <option value="default">Padrão (Claro)</option>
         <option value="dark">Alto Contraste (Escuro)</option>
@@ -269,41 +269,58 @@
 
   <div class="container">
     <header class="main-header">
-      <h1>Portal Web Acessível</h1>
-      <p>Uma plataforma interativa projetada para demonstrar recursos nativos de inclusão digital e acessibilidade visual.</p>
+      <h1>Portal da Inclusão e Cidadania Digital</h1>
+      <p>Desenvolvido para promover a autonomia, independência e acessibilidade de pessoas com deficiência visual e mobilidade reduzida.</p>
     </header>
 
     <main id="conteudo-principal">
+      
       <section>
-        <h2>Como Utilizar Este Portal</h2>
+        <h2>O Impacto da Acessibilidade Digital na Autonomia</h2>
         <p>
-          Este site possui mecânicas próprias de acessibilidade. Você pode personalizar o tamanho do texto, alterar a paleta de cores para atender diferentes tipos de daltonismo, ativar a lupa de ampliação ou selecionar qualquer frase e clicar em <strong>"Ouvir Seleção"</strong> para que o navegador leia para você.
+          A verdadeira inclusão digital acontece quando uma pessoa com deficiência visual — seja ela cega, com baixa visão ou com daltonismo — consegue navegar por qualquer site de forma <strong>autônoma e independente</strong>, sem depender do auxílio de terceiros.
         </p>
+        <p>
+          Este portal foi projetado como um ambiente demonstrativo e funcional, aplicando mecânicas que removem as barreiras de navegação e garantem o acesso à informação como um direito fundamental.
+        </p>
+      </section>
 
+      <section>
+        <h2>Mecânicas de Apoio à Deficiência e Baixa Visão</h2>
+        
         <div class="grid-cards">
+          
           <article class="card">
-            <h3>🔍 Lupa de Ampliação</h3>
-            <p>Clique no botão de ativar a lupa e passe o cursor do mouse sobre qualquer parágrafo ou bloco de texto para expandi-lo dinamicamente.</p>
+            <h3>🔍 Ampliação e Leitura Visual</h3>
+            <p>
+              Para usuários com <strong>baixa visão</strong> ou <strong>visão subnormal</strong>, o redimensionamento de fonte e o modo de ampliação (lupa) garantem conforto na leitura sem distorcer os elementos da tela.
+            </p>
           </article>
 
           <article class="card">
-            <h3>🎨 Paletas para Daltonismo</h3>
-            <p>Selecione um dos modos no menu suspenso para ajustar as cores e o contraste do layout de acordo com os padrões Protanopia, Deuteranopia e Tritanopia.</p>
+            <h3>👁️ Adaptação para Daltonismo</h3>
+            <p>
+              Pessoas com discromatopsia (como Protanopia, Deuteranopia ou Tritanopia) enfrentam desafios na percepção de cores. Nosso seletor ajusta as paletas e contrastes automaticamente para eliminar ruídos visuais.
+            </p>
           </article>
 
           <article class="card">
-            <h3>🔊 Leitor por Voz</h3>
-            <p>Selecione qualquer trecho de texto usando o mouse ou o teclado e clique no botão de áudio para escutar a leitura sintetizada em português.</p>
+            <h3>🔊 Sintetizador de Voz e Leitor de Tela</h3>
+            <p>
+              Para usuários com <strong>cegueira total</strong>, o site foi estruturado com tags semânticas para compatibilidade com leitores (NVDA, TalkBack, VoiceOver), além de contar com uma ferramenta nativa de leitura por voz para trechos selecionados.
+            </p>
           </article>
+
         </div>
       </section>
 
       <section>
-        <h2>Informações Importantes</h2>
+        <h2>Direito à Cidadania Digital</h2>
         <p>
-          A acessibilidade na web garante que todas as pessoas, independentemente de suas capacidades visuais ou motoras, possam navegar e consumir conteúdos digitais com autonomia e dignidade.
+          Garantir a acessibilidade na web não é apenas um diferencial técnico, mas uma exigência legal e social. A autonomia no ambiente virtual reflete diretamente na inclusão escolar, profissional e social das pessoas com deficiência visual.
         </p>
       </section>
+
     </main>
   </div>
 
@@ -311,7 +328,7 @@
     <div class="footer-content">
       <div>
         <h3>Sobre o Projeto</h3>
-        <p>Desenvolvido para fins educacionais e demonstrativos, aplicando as melhores práticas de desenvolvimento inclusivo.</p>
+        <p>Desenvolvido como modelo acadêmico para demonstração de autonomia tecnológica voltada para Pessoas com Deficiência (PCD).</p>
       </div>
 
       <div>
@@ -321,19 +338,17 @@
 
       <div>
         <h3>Licença do Código</h3>
-        <p>Código aberto sob a <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">Licença MIT</a>. Livre para estudos, modificações e distribuições.</p>
+        <p>Código aberto sob a <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">Licença MIT</a>. Livre para estudo, adaptação e redistribuição.</p>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 Portal Acessível. Desenvolvido com foco em inclusão digital.</p>
+      <p>Projeto criado e desenvolvido por <strong>Davi Pereira</strong> &copy; 2026. Todos os direitos reservados.</p>
     </div>
   </footer>
 
   <script>
-    // ===================================================
     // 1. GERENCIAMENTO DE TAMANHO DE FONTE
-    // ===================================================
     let currentFontSize = 16;
 
     function changeFontSize(delta) {
@@ -348,27 +363,23 @@
       localStorage.setItem('user-font-size', 16);
     }
 
-    // ===================================================
-    // 2. TEMAS DE CORES E SALVAMENTO (LOCALSTORAGE)
-    // ===================================================
+    // 2. TEMAS DE CORES E SALVAMENTO NO LOCALSTORAGE
     function applyTheme(theme) {
-      document.body.className = ''; // Limpa temas anteriores
+      document.body.className = '';
       if (theme !== 'default') {
         document.body.classList.add('theme-' + theme);
       }
       localStorage.setItem('user-theme', theme);
     }
 
-    // Carrega as preferências salvas do usuário ao abrir a página
+    // Carrega preferências salvas do usuário ao abrir a página
     window.addEventListener('DOMContentLoaded', () => {
-      // Carregar tema salvo
       const savedTheme = localStorage.getItem('user-theme');
       if (savedTheme) {
         document.getElementById('theme-select').value = savedTheme;
         applyTheme(savedTheme);
       }
 
-      // Carregar tamanho de fonte salvo
       const savedFontSize = localStorage.getItem('user-font-size');
       if (savedFontSize) {
         currentFontSize = parseInt(savedFontSize);
@@ -376,9 +387,7 @@
       }
     });
 
-    // ===================================================
     // 3. MECÂNICA DA LUPA
-    // ===================================================
     let isMagnifierActive = false;
 
     function toggleMagnifier() {
@@ -396,22 +405,18 @@
       }
     }
 
-    // ===================================================
-    // 4. LEITOR DE TEXTO EM VOZ ALTA (SINTETIZADOR NATIVO)
-    // ===================================================
+    // 4. LEITOR DE TEXTO EM VOZ ALTA
     function readSelectedText() {
       const selectedText = window.getSelection().toString();
 
       if (selectedText.trim() !== "") {
-        // Cancela qualquer fala anterior em andamento
-        window.speechSynthesis.cancel();
-
+        window.speechSynthesis.cancel(); // Para falas anteriores
         const utterance = new SpeechSynthesisUtterance(selectedText);
         utterance.lang = 'pt-BR';
-        utterance.rate = 1.0; // Velocidade normal da fala
+        utterance.rate = 1.0;
         window.speechSynthesis.speak(utterance);
       } else {
-        alert("Por favor, selecione com o mouse ou teclado o trecho de texto que deseja ouvir.");
+        alert("Por favor, selecione com o mouse ou teclado o texto que deseja escutar.");
       }
     }
   </script>

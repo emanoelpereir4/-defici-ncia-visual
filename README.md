@@ -1,1 +1,1 @@
-# -defici-ncia-visual
+# -deficincia-visual

@@ -226,4 +226,194 @@
     .footer-bottom {
       text-align: center;
       margin-top: 30px;
-      padding-top:
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+
+    a {
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+  <aside class="accessibility-bar" aria-label="Painel de Acessibilidade">
+    
+    <div class="toolbar-group">
+      <span id="label-fonte"><strong>Fonte:</strong></span>
+      <button class="btn-acc" onclick="changeFontSize(2)" aria-labelledby="label-fonte" aria-label="Aumentar Fonte">A+</button>
+      <button class="btn-acc" onclick="changeFontSize(-2)" aria-labelledby="label-fonte" aria-label="Diminuir Fonte">A-</button>
+      <button class="btn-acc" onclick="resetFontSize()" aria-labelledby="label-fonte" aria-label="Restaurar Fonte">A</button>
+    </div>
+
+    <div class="toolbar-group">
+      <label for="theme-select"><strong>Modo de Visualização:</strong></label>
+      <select id="theme-select" class="select-acc" onchange="applyTheme(this.value)">
+        <option value="default">Padrão (Claro)</option>
+        <option value="dark">Alto Contraste (Escuro)</option>
+        <option value="protanopia">Protanopia (Cegueira/Vermelho)</option>
+        <option value="deuteranopia">Deuteranopia (Cegueira/Verde)</option>
+        <option value="tritanopia">Tritanopia (Cegueira/Azul)</option>
+      </select>
+    </div>
+
+    <div class="toolbar-group">
+      <button id="btn-magnifier" class="btn-acc" onclick="toggleMagnifier()" aria-pressed="false">Ativar Lupa 🔍</button>
+      <button class="btn-acc" onclick="readSelectedText()" aria-label="Ouvir texto selecionado">Ouvir Seleção 🔊</button>
+    </div>
+
+  </aside>
+
+  <div class="container">
+    <header class="main-header">
+      <h1>Portal Web Acessível</h1>
+      <p>Uma plataforma interativa projetada para demonstrar recursos nativos de inclusão digital e acessibilidade visual.</p>
+    </header>
+
+    <main id="conteudo-principal">
+      <section>
+        <h2>Como Utilizar Este Portal</h2>
+        <p>
+          Este site possui mecânicas próprias de acessibilidade. Você pode personalizar o tamanho do texto, alterar a paleta de cores para atender diferentes tipos de daltonismo, ativar a lupa de ampliação ou selecionar qualquer frase e clicar em <strong>"Ouvir Seleção"</strong> para que o navegador leia para você.
+        </p>
+
+        <div class="grid-cards">
+          <article class="card">
+            <h3>🔍 Lupa de Ampliação</h3>
+            <p>Clique no botão de ativar a lupa e passe o cursor do mouse sobre qualquer parágrafo ou bloco de texto para expandi-lo dinamicamente.</p>
+          </article>
+
+          <article class="card">
+            <h3>🎨 Paletas para Daltonismo</h3>
+            <p>Selecione um dos modos no menu suspenso para ajustar as cores e o contraste do layout de acordo com os padrões Protanopia, Deuteranopia e Tritanopia.</p>
+          </article>
+
+          <article class="card">
+            <h3>🔊 Leitor por Voz</h3>
+            <p>Selecione qualquer trecho de texto usando o mouse ou o teclado e clique no botão de áudio para escutar a leitura sintetizada em português.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Informações Importantes</h2>
+        <p>
+          A acessibilidade na web garante que todas as pessoas, independentemente de suas capacidades visuais ou motoras, possam navegar e consumir conteúdos digitais com autonomia e dignidade.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <footer role="contentinfo">
+    <div class="footer-content">
+      <div>
+        <h3>Sobre o Projeto</h3>
+        <p>Desenvolvido para fins educacionais e demonstrativos, aplicando as melhores práticas de desenvolvimento inclusivo.</p>
+      </div>
+
+      <div>
+        <h3>Conformidade e Acessibilidade</h3>
+        <p>Este portal segue as diretrizes internacionais <strong>WCAG 2.1 (Web Content Accessibility Guidelines)</strong> no nível AA.</p>
+      </div>
+
+      <div>
+        <h3>Licença do Código</h3>
+        <p>Código aberto sob a <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">Licença MIT</a>. Livre para estudos, modificações e distribuições.</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Portal Acessível. Desenvolvido com foco em inclusão digital.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ===================================================
+    // 1. GERENCIAMENTO DE TAMANHO DE FONTE
+    // ===================================================
+    let currentFontSize = 16;
+
+    function changeFontSize(delta) {
+      currentFontSize = Math.min(Math.max(12, currentFontSize + delta), 26);
+      document.documentElement.style.setProperty('--base-font-size', currentFontSize + 'px');
+      localStorage.setItem('user-font-size', currentFontSize);
+    }
+
+    function resetFontSize() {
+      currentFontSize = 16;
+      document.documentElement.style.setProperty('--base-font-size', '16px');
+      localStorage.setItem('user-font-size', 16);
+    }
+
+    // ===================================================
+    // 2. TEMAS DE CORES E SALVAMENTO (LOCALSTORAGE)
+    // ===================================================
+    function applyTheme(theme) {
+      document.body.className = ''; // Limpa temas anteriores
+      if (theme !== 'default') {
+        document.body.classList.add('theme-' + theme);
+      }
+      localStorage.setItem('user-theme', theme);
+    }
+
+    // Carrega as preferências salvas do usuário ao abrir a página
+    window.addEventListener('DOMContentLoaded', () => {
+      // Carregar tema salvo
+      const savedTheme = localStorage.getItem('user-theme');
+      if (savedTheme) {
+        document.getElementById('theme-select').value = savedTheme;
+        applyTheme(savedTheme);
+      }
+
+      // Carregar tamanho de fonte salvo
+      const savedFontSize = localStorage.getItem('user-font-size');
+      if (savedFontSize) {
+        currentFontSize = parseInt(savedFontSize);
+        document.documentElement.style.setProperty('--base-font-size', currentFontSize + 'px');
+      }
+    });
+
+    // ===================================================
+    // 3. MECÂNICA DA LUPA
+    // ===================================================
+    let isMagnifierActive = false;
+
+    function toggleMagnifier() {
+      isMagnifierActive = !isMagnifierActive;
+      const btn = document.getElementById('btn-magnifier');
+
+      if (isMagnifierActive) {
+        document.body.classList.add('magnifier-active');
+        btn.setAttribute('aria-pressed', 'true');
+        btn.innerText = 'Desativar Lupa ❌';
+      } else {
+        document.body.classList.remove('magnifier-active');
+        btn.setAttribute('aria-pressed', 'false');
+        btn.innerText = 'Ativar Lupa 🔍';
+      }
+    }
+
+    // ===================================================
+    // 4. LEITOR DE TEXTO EM VOZ ALTA (SINTETIZADOR NATIVO)
+    // ===================================================
+    function readSelectedText() {
+      const selectedText = window.getSelection().toString();
+
+      if (selectedText.trim() !== "") {
+        // Cancela qualquer fala anterior em andamento
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(selectedText);
+        utterance.lang = 'pt-BR';
+        utterance.rate = 1.0; // Velocidade normal da fala
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("Por favor, selecione com o mouse ou teclado o trecho de texto que deseja ouvir.");
+      }
+    }
+  </script>
+</body>
+</html>
